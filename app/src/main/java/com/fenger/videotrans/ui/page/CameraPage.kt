@@ -36,13 +36,12 @@ fun CameraPage(
 ) {
     val context = LocalContext.current
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_FRONT) }
-    var torchState by remember { mutableStateOf(TorchState.OFF) }
-
-    val imageCapture: ImageCapture = remember { ImageCapture.Builder().build() }
+    var torchState by remember { mutableStateOf(ImageCapture.FLASH_MODE_ON) }
+    val imageCapture: ImageCapture = remember { ImageCapture.Builder().setFlashMode(torchState).build() }
 
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? -> onImageCaptured(uri) }
 
-    CameraPreviewView(imageCapture, lensFacing, torchState) { cameraUIAction ->
+    CameraPreviewView(imageCapture, lensFacing) { cameraUIAction ->
         when (cameraUIAction) {
             is CameraUIAction.OnCameraClick -> {
                 CameraUtils.takePhoto(imageCapture, context, onImageCaptured)
@@ -55,7 +54,7 @@ fun CameraPage(
                 galleryLauncher.launch("image/*")
             }
             is CameraUIAction.OnSwitchCameraTorch -> {
-                torchState = if (torchState == TorchState.OFF) TorchState.ON else TorchState.OFF
+                torchState = if (torchState == ImageCapture.FLASH_MODE_ON) ImageCapture.FLASH_MODE_OFF else ImageCapture.FLASH_MODE_ON
             }
         }
     }

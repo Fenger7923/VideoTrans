@@ -3,7 +3,6 @@ package com.fenger.videotrans.ui.widget
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
-import androidx.camera.core.TorchState
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,6 @@ import com.fenger.videotrans.ui.page.getCameraProvider
 fun CameraPreviewView(
     imageCapture: ImageCapture,
     lensFacing: Int = CameraSelector.LENS_FACING_BACK,
-    torchState: Int = TorchState.OFF,
     cameraUIAction: (CameraUIAction) -> Unit
 ) {
 
